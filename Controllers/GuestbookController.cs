@@ -31,17 +31,24 @@ namespace Gateway.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGuestbook(GuestbookModel guestbookModel)
         {
-            CreateGuestbookProtobufRequest createGuestbookProtobufRequest = new CreateGuestbookProtobufRequest
-            {
-                Name = guestbookModel.Name,
-                Title = guestbookModel.Title,
-                Content = guestbookModel.Content,
-                Status = guestbookModel.Status,
-                Endtime = Timestamp.FromDateTimeOffset(guestbookModel.Endtime)
-            };
+
             //var response = client.CreateGuestbook(createGuestbookRequest);
-            var response = await GuestbookService.CreateGuestbook(createGuestbookProtobufRequest);
-            return Content(JsonConvert.SerializeObject(response), "application/json"); ;
+            var response = await GuestbookService.CreateGuestbook(guestbookModel);
+            return Content(JsonConvert.SerializeObject(response), "application/json");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateGuestbook(GuestbookModel guestbookModel) 
+        {
+            var response = await GuestbookService.UpdateGuestbook(guestbookModel);
+            return Content(JsonConvert.SerializeObject(response), "application/json");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGuestbook(string Id)
+        {
+            var response = await GuestbookService.DeleteGuestbook(Id);
+            return Content(JsonConvert.SerializeObject(response), "application/json");
         }
     }
 }

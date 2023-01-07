@@ -7,27 +7,27 @@ package gusetbook;
 
 service GuestbookProtoBuf {
   // 新增
-  rpc CreateGuestbookProtobuf (CreateGuestbookProtobufRequest) returns (CreateGuestbookProtobufResponse);
+	rpc CreateGuestbookProtobuf (CreateGuestbookProtobufRequest) returns (CreateGuestbookProtobufResponse);
   // 查詢
-  rpc GetGuestbookProtobuf (GetGuestbookProtobufRequest) returns (GetGuestbookProtobufResponse);
+	rpc GetGuestbookProtobuf (GetGuestbookProtobufRequest) returns (GetGuestbookProtobufResponse);
   // 修改
-  rpc UpdateGuestbookProtobuf (UpdateGuestbookProtobufRequest) returns (UpdateGuestbookProtobufResponse);
+	rpc UpdateGuestbookProtobuf (UpdateGuestbookProtobufRequest) returns (UpdateGuestbookProtobufResponse);
   // 刪除
-  rpc DeleteGuestbookProtobuf (DeleteGuestbookProtobufRequest) returns (DeleteGuestbookProtobufResponse);
+	rpc DeleteGuestbookProtobuf (DeleteGuestbookProtobufRequest) returns (DeleteGuestbookProtobufResponse);
 }
 
 message CreateGuestbookProtobufRequest {
-  string name = 1;
-  string title = 2;
-  string content = 3;
-  bool status = 4;
-  google.protobuf.Timestamp endtime = 5;
+	string name = 1;
+	string title = 2;
+	string content = 3;
+	bool status = 4;
+	google.protobuf.Timestamp endtime = 5;
 }
 
 message CreateGuestbookProtobufResponse {
-  string message = 1;
-  int64 status = 2;
-  google.protobuf.Timestamp createAt = 3;
+	string message = 1;
+	int64 status = 2;
+	google.protobuf.Timestamp createAt = 3;
 }
 
 message GetGuestbookProtobufRequest {
@@ -35,29 +35,41 @@ message GetGuestbookProtobufRequest {
 }
 
 message GetGuestbookProtobufResponse {
-  repeated Guestbook guestbooks = 1;
+	string message = 1;
+	int64 status = 2;
+	repeated Guestbook guestbooks = 3;
 }
 message Guestbook{
-  string name = 1;
-  string title = 2;
-  string content = 3;
-  bool status = 4;
-  google.protobuf.Timestamp endtime = 5;
+	string id = 1;
+	string name = 2;
+	string title = 3;
+	string content = 4;
+	bool status = 5;
+	google.protobuf.Timestamp endtime = 6;
 }
 
 message UpdateGuestbookProtobufRequest {
-
+	string id = 1;
+	string name = 2;
+	string title = 3;
+	string content = 4;
+	bool status = 5;
+	google.protobuf.Timestamp endtime = 6;
 }
 
 message UpdateGuestbookProtobufResponse {
-
+	string id = 1;
+	string message = 2;
+	int64 status = 3;
 }
 
 message DeleteGuestbookProtobufRequest {
-
+	string id = 1;
 }
 
 message DeleteGuestbookProtobufResponse {
-
+	string message = 2;
+	int64 status = 3;
 }
+
 
