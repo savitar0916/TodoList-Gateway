@@ -14,6 +14,8 @@ service GuestbookProtoBuf {
 	rpc UpdateGuestbookProtobuf (UpdateGuestbookProtobufRequest) returns (UpdateGuestbookProtobufResponse);
   // §R°£
 	rpc DeleteGuestbookProtobuf (DeleteGuestbookProtobufRequest) returns (DeleteGuestbookProtobufResponse);
+
+	rpc SCreateGuestbooks (stream CreateGuestbookProtobufRequest) returns (stream CreateGuestbookProtobufResponse);
 }
 
 message CreateGuestbookProtobufRequest {
