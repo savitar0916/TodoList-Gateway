@@ -95,11 +95,11 @@ namespace Gateway.Services
         public static async Task<dynamic> SCreateGuestbooks(GuestbookModel guestbookModel , IConfiguration config)
         {
             var response = new CreateGuestbookProtobufResponse();
+            var GuestbookGrpcServerConnectionString = config["GuestbookGrpcServer:Address"] + config["GuestbookGrpcServer:Port"];
+            var channel = GrpcChannel.ForAddress(GuestbookGrpcServerConnectionString);
+            var client = new GuestbookProtoBuf.GuestbookProtoBufClient(channel);
             try
             {
-                var GuestbookGrpcServerConnectionString = config["GuestbookGrpcServer:Address"] + config["GuestbookGrpcServer:Port"];
-                var channel = GrpcChannel.ForAddress(GuestbookGrpcServerConnectionString);
-                var client = new GuestbookProtoBuf.GuestbookProtoBufClient(channel);
                 var requestStream = client.SCreateGuestbooks();
                 await requestStream.RequestStream.WriteAsync(new CreateGuestbookProtobufRequest
                 {
@@ -112,8 +112,8 @@ namespace Gateway.Services
                 
                 while (await requestStream.ResponseStream.MoveNext())
                 {
-                    response = requestStream.ResponseStream.Current;
-                    return response;
+                    //response = requestStream.ResponseStream.Current;
+                    return requestStream.ResponseStream.Current;
                 }
             }
             catch (SocketException socketException)
@@ -127,6 +127,10 @@ namespace Gateway.Services
                 response.Message = "Create Guestbook Error.Please Try Again";
                 response.Status = 500;
                 Console.WriteLine("There is a Proble : " + httpRequestException.Message);
+            }
+            finally
+            {
+                await channel.ShutdownAsync();
             }
             return response;
         }
